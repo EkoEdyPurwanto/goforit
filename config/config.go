@@ -84,7 +84,7 @@ func (c *Config) LoadConfig() error {
 	return nil
 }
 
-// constructor
+// NewConfig Constructor
 func NewConfig() (*Config, error) {
 	cfg := &Config{}
 	err := cfg.LoadConfig()
