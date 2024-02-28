@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/spf13/viper"
 )
 
@@ -31,7 +32,7 @@ type (
 	JWTConfig struct {
 		Issuer           string
 		SignatureKey     []byte
-		SigningMethod    interface{}
+		SigningMethod    *jwt.SigningMethodHMAC
 		ExpiresInMinutes int
 		// Additional configurations⤵️
 	}
@@ -70,7 +71,7 @@ func (c *Config) LoadConfig() error {
 	c.JWTConfig = JWTConfig{
 		Issuer:           v.GetString("APP_ISSUER"),
 		SignatureKey:     []byte(v.GetString("APP_SIGNATURE_KEY")),
-		SigningMethod:    nil,
+		SigningMethod:    jwt.SigningMethodHS512,
 		ExpiresInMinutes: v.GetInt("APP_EXPIRES_IN_MINUTES"),
 	}
 
