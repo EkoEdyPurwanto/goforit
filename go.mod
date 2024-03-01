@@ -1,4 +1,4 @@
-module goforit
+module github.com/EkoEdyPurwanto/goforit
 
 go 1.22.0
 
