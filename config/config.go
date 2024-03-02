@@ -15,6 +15,7 @@ type (
 		Password string
 		Name     string
 		SSLMode  string
+		TimeZone string
 		// Additional configurations⤵️
 	}
 
@@ -57,6 +58,7 @@ func (c *Config) LoadConfig() error {
 		Password: v.GetString("APP_DB_PASSWORD"),
 		Name:     v.GetString("APP_DB_NAME"),
 		SSLMode:  v.GetString("APP_SSL_MODE"),
+		TimeZone: v.GetString("APP_TIME_ZONE"),
 	}
 
 	c.ApiConfig = ApiConfig{
@@ -75,7 +77,7 @@ func (c *Config) LoadConfig() error {
 		ExpiresInMinutes: v.GetInt("APP_EXPIRES_IN_MINUTES"),
 	}
 
-	if c.DbConfig.Driver == "" || c.DbConfig.Host == "" || c.DbConfig.Port == "" || c.DbConfig.User == "" || c.DbConfig.Password == "" || c.DbConfig.Name == "" || c.DbConfig.SSLMode == "" ||
+	if c.DbConfig.Driver == "" || c.DbConfig.Host == "" || c.DbConfig.Port == "" || c.DbConfig.User == "" || c.DbConfig.Password == "" || c.DbConfig.Name == "" || c.DbConfig.SSLMode == "" || c.DbConfig.TimeZone == "" ||
 		c.ApiConfig.ApiHost == "" || c.ApiConfig.ApiPort == "" ||
 		c.FileLogConfig.FilePath == "" ||
 		c.JWTConfig.Issuer == "" || len(c.JWTConfig.SignatureKey) == 0 || c.JWTConfig.ExpiresInMinutes == 0 {
