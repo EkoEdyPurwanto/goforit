@@ -1,6 +1,6 @@
 package manager
 
-import "goforit/repository/postgres"
+import "github.com/EkoEdyPurwanto/goforit/repository/postgres"
 
 type (
 	RepositoryManager interface {

@@ -1,15 +1,16 @@
 package controller
 
 import (
+	"github.com/EkoEdyPurwanto/goforit/usecase"
 	"github.com/gofiber/fiber/v3"
-	"goforit/usecase"
 )
 
 type UsersController struct {
 	usersUC usecase.UsersUseCase
-	engine *fiber.App
+	engine  *fiber.App
 }
 
+// Route users
 func (u *UsersController) Route() {
 
 }
@@ -18,6 +19,6 @@ func (u *UsersController) Route() {
 func NewUsersController(usersUC usecase.UsersUseCase, engine *fiber.App) *UsersController {
 	return &UsersController{
 		usersUC: usersUC,
-		engine: engine,
+		engine:  engine,
 	}
 }

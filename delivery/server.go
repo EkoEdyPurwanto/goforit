@@ -2,11 +2,11 @@ package delivery
 
 import (
 	"fmt"
+	"github.com/EkoEdyPurwanto/goforit/config"
+	"github.com/EkoEdyPurwanto/goforit/delivery/controller"
+	"github.com/EkoEdyPurwanto/goforit/manager"
 	"github.com/gofiber/fiber/v3"
 	"github.com/sirupsen/logrus"
-	"goforit/config"
-	"goforit/delivery/controller"
-	"goforit/manager"
 )
 
 type (

@@ -1,6 +1,8 @@
 package manager
 
-import "goforit/usecase"
+import (
+	"github.com/EkoEdyPurwanto/goforit/usecase"
+)
 
 type (
 	UseCaseManager interface {
