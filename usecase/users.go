@@ -37,6 +37,6 @@ func (u *userUseCase) Register(payload req.RegisterUsersRequest) error {
 func NewUsersUseCase(repository postgres.UsersRepository, validate *validator.Validate) UsersUseCase {
 	return &userUseCase{
 		repository: repository,
-		validate: validate,
+		validate:   validate,
 	}
 }
