@@ -12,7 +12,11 @@ type UsersController struct {
 
 // Route users
 func (u *UsersController) Route() {
+	u.engine.Get("/ping", u.registerHandler)
+}
 
+func (u *UsersController) registerHandler(ctx fiber.Ctx) error {
+	return nil
 }
 
 // NewUsersController Constructor
