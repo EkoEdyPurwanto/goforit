@@ -23,3 +23,6 @@ go.work
 # IDE
 .idea
 .vscode
+
+# LOGGING
+*.log
