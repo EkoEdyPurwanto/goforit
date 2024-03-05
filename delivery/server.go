@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"github.com/EkoEdyPurwanto/goforit/config"
 	"github.com/EkoEdyPurwanto/goforit/delivery/controller"
+	"github.com/EkoEdyPurwanto/goforit/delivery/middleware"
 	"github.com/EkoEdyPurwanto/goforit/manager"
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v3"
 	"github.com/sirupsen/logrus"
 )
@@ -21,14 +23,14 @@ type (
 func (s *Server) Run() {
 	s.initMiddlewares()
 	s.initControllers()
-	err := s.engine.Use(s.host)
+	err := s.engine.Listen(s.host)
 	if err != nil {
 		panic(err)
 	}
 }
 
 func (s *Server) initMiddlewares() {
-	//s.engine.Use(middleware.LogRequest(s.log))
+	s.engine.Use(middleware.Logging(s.log))
 }
 
 func (s *Server) initControllers() {
@@ -46,17 +48,19 @@ func NewServer() *Server {
 	if err != nil {
 		logrus.Fatalln(err.Error())
 	}
+	var (
+		// instance repository
+		repositoryManager = manager.NewRepositoryManager(infraManager)
 
-	// instance repository
-	repositoryManager := manager.NewRepositoryManager(infraManager)
-	// instance usecase
-	useCaseManager := manager.NewUseCaseManager(repositoryManager)
+		// instance useCase
+		v              = validator.New()
+		useCaseManager = manager.NewUseCaseManager(repositoryManager, v)
 
-	hostAndPort := fmt.Sprintf("%s:%s", cfg.Host, cfg.Port)
+		hostAndPort = fmt.Sprintf("%s:%s", cfg.ApiHost, cfg.ApiPort)
 
-	logger := logrus.New()
-
-	app := fiber.New()
+		logger = logrus.New()
+		app    = fiber.New()
+	)
 	return &Server{
 		useCaseM: useCaseManager,
 		engine:   app,
