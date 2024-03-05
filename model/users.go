@@ -1,5 +1,5 @@
 package model
 
-type Users struct {
+type User struct {
 	//TODO implement me
 }
