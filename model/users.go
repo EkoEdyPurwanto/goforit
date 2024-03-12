@@ -1,5 +1,15 @@
 package model
 
+import "time"
+
 type User struct {
-	//TODO implement me
+	Id       string
+	Username string
+	Email    string
+	Password string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt time.Time
 }
+
+type Users []User

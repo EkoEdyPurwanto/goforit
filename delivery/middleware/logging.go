@@ -3,7 +3,7 @@ package middleware
 import (
 	"github.com/EkoEdyPurwanto/goforit/config"
 	"github.com/EkoEdyPurwanto/goforit/model/dto/req"
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"
 	"os"
 	"time"
@@ -20,7 +20,7 @@ func Logging(log *logrus.Logger) fiber.Handler {
 	}
 	log.Out = file
 
-	return func(ctx fiber.Ctx) error {
+	return func(ctx *fiber.Ctx) error {
 		startTime := time.Now()
 		err := ctx.Next()
 		endTime := time.Since(startTime)

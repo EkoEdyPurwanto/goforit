@@ -1,12 +1,15 @@
 package usecase
 
 import (
-	"github.com/EkoEdyPurwanto/goforit/exception"
+	"fmt"
+	"github.com/EkoEdyPurwanto/goforit/model"
 	"github.com/EkoEdyPurwanto/goforit/model/dto/req"
 	"github.com/EkoEdyPurwanto/goforit/repository/postgres"
+	"github.com/EkoEdyPurwanto/goforit/util/common"
+	"github.com/EkoEdyPurwanto/goforit/util/security"
 	"github.com/go-playground/validator/v10"
 	"github.com/sirupsen/logrus"
-	"net/http"
+	"time"
 )
 
 type (
@@ -14,29 +17,46 @@ type (
 		Register(payload req.RegisterUsersRequest) error
 	}
 	userUseCase struct {
-		repository postgres.UsersRepository
-		validate   *validator.Validate
+		Repository postgres.UsersRepository
+		Validate   *validator.Validate
 	}
 )
 
 func (u *userUseCase) Register(payload req.RegisterUsersRequest) error {
-	err := u.validate.Struct(payload)
+	// struct validation
+	err := u.Validate.Struct(payload)
 	if err != nil {
-		logrus.WithError(err).Error("Validation failed")
-		return &exception.MyError{
-			Code:    http.StatusBadRequest,
-			Message: "bad request",
-			Err:     err.Error(),
-		}
+		logrus.WithError(err).Error()
+		return fmt.Errorf("failed save user")
 	}
-
+	// hash password use DefaultCost
+	hashPassword, err := security.HashPassword(payload.Password)
+	if err != nil {
+		return err
+	}
+	//fill value of user
+	user := model.User{
+		Id:        common.GenerateID(),
+		Username:  payload.Username,
+		Email:     payload.Email,
+		Password:  hashPassword,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Time{},
+		DeletedAt: time.Time{},
+	}
+	// save user
+	err = u.Repository.Save(user)
+	if err != nil {
+		logrus.WithError(err).Error()
+		return fmt.Errorf("failed save user")
+	}
 	return nil
 }
 
 // NewUsersUseCase Constructor
 func NewUsersUseCase(repository postgres.UsersRepository, validate *validator.Validate) UsersUseCase {
 	return &userUseCase{
-		repository: repository,
-		validate:   validate,
+		Repository: repository,
+		Validate:   validate,
 	}
 }
