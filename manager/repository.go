@@ -7,18 +7,18 @@ type (
 		UsersRepository() postgres.UsersRepository
 	}
 	repositoryManager struct {
-		infraM InfraManager
+		InfraM InfraManager
 	}
 )
 
 // UsersRepository implement from RepositoryManager
 func (r *repositoryManager) UsersRepository() postgres.UsersRepository {
-	return postgres.NewUsersRepository(r.infraM.Conn())
+	return postgres.NewUsersRepository(r.InfraM.Conn())
 }
 
 // NewRepositoryManager Constructor
 func NewRepositoryManager(infraM InfraManager) RepositoryManager {
 	return &repositoryManager{
-		infraM: infraM,
+		InfraM: infraM,
 	}
 }
