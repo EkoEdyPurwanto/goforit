@@ -4,8 +4,8 @@
 export APP_DB_DRIVER=postgres
 export APP_DB_HOST=localhost
 export APP_DB_PORT=5432
-export APP_DB_USER=eepsql
-export APP_DB_PASSWORD=1903
+export APP_DB_USER=root
+export APP_DB_PASSWORD=root
 export APP_DB_NAME=goforit
 export APP_SSL_MODE=disable
 export APP_TIME_ZONE=Asia/Jakarta

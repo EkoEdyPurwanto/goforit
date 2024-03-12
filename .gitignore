@@ -32,3 +32,6 @@ go.work
 
 # TEMPORARY
 tmp
+
+# ENV
+env.sh
