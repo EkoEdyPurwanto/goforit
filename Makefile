@@ -14,4 +14,13 @@ migrate-down:
 	migrate -path db/migrations -database "postgresql://$(APP_DB_USER):$(APP_DB_PASSWORD)@$(APP_DB_HOST):$(APP_DB_PORT)/$(APP_DB_NAME)?sslmode=disable" -verbose down ${NN}
 	@echo "Migration down completed successfully."
 
-.PHONY: migrate-create migrate-up migrate-down
+scan-vuln-general:
+	osv-scanner -r go.mod
+
+scan-vuln-with-json-output:
+	osv-scanner --lockfile=go.mod --config=osv-scanner.toml --format json > results.json
+
+scan-vuln-general-with-config:
+		osv-scanner --lockfile=go.mod --config=osv-scanner.toml --format=table
+
+.PHONY: migrate-create migrate-up migrate-down scan-vuln-dir scan-vuln-specify scan-vuln-std
