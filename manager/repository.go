@@ -4,16 +4,16 @@ import "github.com/EkoEdyPurwanto/goforit/repository/postgres"
 
 type (
 	RepositoryManager interface {
-		UsersRepository() postgres.UsersRepository
+		AuthRepository() postgres.AuthRepository
 	}
 	repositoryManager struct {
 		InfraM InfraManager
 	}
 )
 
-// UsersRepository implement from RepositoryManager
-func (r *repositoryManager) UsersRepository() postgres.UsersRepository {
-	return postgres.NewUsersRepository(r.InfraM.Conn())
+// AuthRepository implement from RepositoryManager
+func (r *repositoryManager) AuthRepository() postgres.AuthRepository {
+	return postgres.NewAuthRepository(r.InfraM.Conn())
 }
 
 // NewRepositoryManager Constructor

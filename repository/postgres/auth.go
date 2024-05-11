@@ -6,15 +6,15 @@ import (
 )
 
 type (
-	UsersRepository interface {
+	AuthRepository interface {
 		Save(user model.User) error
 	}
-	usersRepository struct {
+	authRepository struct {
 		DB *sql.DB
 	}
 )
 
-func (u *usersRepository) Save(user model.User) error {
+func (u *authRepository) Save(user model.User) error {
 	SQL := `INSERT INTO "user"(id, username, email, password, created_at, updated_at, deleted_at) VALUES ($1, $2, $3, $4, $5, $6, $7)`
 	_, err := u.DB.Exec(SQL,
 		&user.Id,
@@ -31,9 +31,9 @@ func (u *usersRepository) Save(user model.User) error {
 	return nil
 }
 
-// NewUsersRepository Constructor
-func NewUsersRepository(db *sql.DB) UsersRepository {
-	return &usersRepository{
+// NewAuthRepository Constructor
+func NewAuthRepository(db *sql.DB) AuthRepository {
+	return &authRepository{
 		DB: db,
 	}
 }

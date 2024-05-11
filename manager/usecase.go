@@ -7,7 +7,7 @@ import (
 
 type (
 	UseCaseManager interface {
-		UsersUseCase() usecase.UsersUseCase
+		AuthUseCase() usecase.AuthUseCase
 	}
 	useCaseManager struct {
 		RepositoryM RepositoryManager
@@ -15,15 +15,15 @@ type (
 	}
 )
 
-// UsersUseCase implement from UseCaseManager
-func (u *useCaseManager) UsersUseCase() usecase.UsersUseCase {
-	return usecase.NewUsersUseCase(u.RepositoryM.UsersRepository(), u.Validate)
+// AuthUseCase implement from UseCaseManager
+func (u *useCaseManager) AuthUseCase() usecase.AuthUseCase {
+	return usecase.NewAuthUseCase(u.RepositoryM.AuthRepository(), u.Validate)
 }
 
 // NewUseCaseManager Constructor
 func NewUseCaseManager(repositoryM RepositoryManager, validate *validator.Validate) UseCaseManager {
 	return &useCaseManager{
 		RepositoryM: repositoryM,
-		Validate: validate,
+		Validate:    validate,
 	}
 }

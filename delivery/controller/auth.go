@@ -7,20 +7,20 @@ import (
 	"net/http"
 )
 
-type UsersController struct {
-	UsersUC usecase.UsersUseCase
+type AuthController struct {
+	UseCase usecase.AuthUseCase
 	Engine  *fiber.App
 }
 
-// Route users
-func (u *UsersController) Route() {
+// Route auth
+func (u *AuthController) Route() {
 	rg := u.Engine.Group("/api/v1")
 
 	rg.Post("/auth/register", u.registerHandler)
 }
 
-func (u *UsersController) registerHandler(ctx *fiber.Ctx) error {
-	var request req.RegisterUsersRequest
+func (u *AuthController) registerHandler(ctx *fiber.Ctx) error {
+	var request req.AuthRegisterRequest
 
 	if err := ctx.BodyParser(&request); err != nil {
 		return ctx.Status(http.StatusBadRequest).JSON(fiber.Map{
@@ -29,7 +29,7 @@ func (u *UsersController) registerHandler(ctx *fiber.Ctx) error {
 		})
 	}
 
-	if err := u.UsersUC.Register(request); err != nil {
+	if err := u.UseCase.Register(request); err != nil {
 		return err
 	}
 
@@ -37,9 +37,9 @@ func (u *UsersController) registerHandler(ctx *fiber.Ctx) error {
 }
 
 // NewUsersController Constructor
-func NewUsersController(usersUC usecase.UsersUseCase, engine *fiber.App) *UsersController {
-	return &UsersController{
-		UsersUC: usersUC,
+func NewUsersController(useCase usecase.AuthUseCase, engine *fiber.App) *AuthController {
+	return &AuthController{
+		UseCase: useCase,
 		Engine:  engine,
 	}
 }

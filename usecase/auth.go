@@ -5,24 +5,24 @@ import (
 	"github.com/EkoEdyPurwanto/goforit/model"
 	"github.com/EkoEdyPurwanto/goforit/model/dto/req"
 	"github.com/EkoEdyPurwanto/goforit/repository/postgres"
-	"github.com/EkoEdyPurwanto/goforit/util/common"
-	"github.com/EkoEdyPurwanto/goforit/util/security"
+	"github.com/EkoEdyPurwanto/goforit/utility/common"
+	"github.com/EkoEdyPurwanto/goforit/utility/security"
 	"github.com/go-playground/validator/v10"
 	"github.com/sirupsen/logrus"
 	"time"
 )
 
 type (
-	UsersUseCase interface {
-		Register(payload req.RegisterUsersRequest) error
+	AuthUseCase interface {
+		Register(payload req.AuthRegisterRequest) error
 	}
-	userUseCase struct {
-		Repository postgres.UsersRepository
+	authUseCase struct {
+		Repository postgres.AuthRepository
 		Validate   *validator.Validate
 	}
 )
 
-func (u *userUseCase) Register(payload req.RegisterUsersRequest) error {
+func (u *authUseCase) Register(payload req.AuthRegisterRequest) error {
 	// struct validation
 	err := u.Validate.Struct(payload)
 	if err != nil {
@@ -53,9 +53,9 @@ func (u *userUseCase) Register(payload req.RegisterUsersRequest) error {
 	return nil
 }
 
-// NewUsersUseCase Constructor
-func NewUsersUseCase(repository postgres.UsersRepository, validate *validator.Validate) UsersUseCase {
-	return &userUseCase{
+// NewAuthUseCase Constructor
+func NewAuthUseCase(repository postgres.AuthRepository, validate *validator.Validate) AuthUseCase {
+	return &authUseCase{
 		Repository: repository,
 		Validate:   validate,
 	}
