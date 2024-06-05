@@ -34,7 +34,7 @@ func (s *Server) initMiddlewares() {
 }
 
 func (s *Server) initControllers() {
-	controller.NewUsersController(s.UseCaseM.UsersUseCase(), s.Engine).Route()
+	controller.NewUsersController(s.UseCaseM.AuthUseCase(), s.Engine).Route()
 }
 
 // NewServer Constructor
@@ -53,13 +53,13 @@ func NewServer() *Server {
 		repositoryManager = manager.NewRepositoryManager(infraManager)
 
 		// instance useCase
-		v              = validator.New()
-		useCaseManager = manager.NewUseCaseManager(repositoryManager, v)
+		validate       = validator.New()
+		logger         = logrus.New()
+		useCaseManager = manager.NewUseCaseManager(repositoryManager, validate, logger)
 
 		hostAndPort = fmt.Sprintf("%s:%s", cfg.ApiHost, cfg.ApiPort)
 
-		logger = logrus.New()
-		app    = fiber.New()
+		app = fiber.New()
 	)
 	return &Server{
 		UseCaseM: useCaseManager,

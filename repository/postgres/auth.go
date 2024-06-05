@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"database/sql"
+
 	"github.com/EkoEdyPurwanto/goforit/model"
 )
 
@@ -15,7 +16,7 @@ type (
 )
 
 func (u *authRepository) Save(user model.User) error {
-	SQL := `INSERT INTO "user"(id, username, email, password, created_at, updated_at, deleted_at) VALUES ($1, $2, $3, $4, $5, $6, $7)`
+	SQL := `INSERT INTO "user_credential"(id, username, email, password, created_at, updated_at, deleted_at) VALUES ($1, $2, $3, $4, $5, $6, $7)`
 	_, err := u.DB.Exec(SQL,
 		&user.Id,
 		&user.Username,
