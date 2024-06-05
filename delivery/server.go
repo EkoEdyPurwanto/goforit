@@ -34,7 +34,7 @@ func (s *Server) initMiddlewares() {
 }
 
 func (s *Server) initControllers() {
-	controller.NewUsersController(s.UseCaseM.AuthUseCase(), s.Engine).Route()
+	controller.NewAuthController(s.UseCaseM.AuthUseCase(), s.Engine).Route()
 }
 
 // NewServer Constructor

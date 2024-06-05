@@ -36,8 +36,8 @@ func (u *AuthController) registerHandler(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusCreated).JSON(fiber.Map{"message": "Registration successful"})
 }
 
-// NewUsersController Constructor
-func NewUsersController(useCase usecase.AuthUseCase, engine *fiber.App) *AuthController {
+// NewAuthController Constructor
+func NewAuthController(useCase usecase.AuthUseCase, engine *fiber.App) *AuthController {
 	return &AuthController{
 		UseCase: useCase,
 		Engine:  engine,
